@@ -1,0 +1,6 @@
+<p-menubar [model]="items" >
+    <div>
+        <app-theme-menu *ngIf="options$ | async as options" [options]="options" (themeChange)="themeChangeHandler($event)">
+        </app-theme-menu>
+    </div>
+</p-menubar>

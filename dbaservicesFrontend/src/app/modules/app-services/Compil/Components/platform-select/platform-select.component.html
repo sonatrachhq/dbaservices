@@ -1,0 +1,29 @@
+<div class="demo-container p-p-4">
+    <p-card styleClass="p-fluid">
+        <ng-template pTemplate="title">
+            Plateforme
+        </ng-template>
+        <ng-template pTemplate="subtitle">
+            Veuillez choisir la plateforme de l'application à compiler
+        </ng-template>
+        <ng-template pTemplate="content">
+         
+
+            <div class="p-field">
+                <label for="firstname">Description Plateforme </label>
+                <p-dropdown [options]='options'  required="true"
+                  [(ngModel)]="selectedPlatform" placeholder="Selectionner une plateforme" [showClear]="true"  
+                  [ngClass]="{'ng-dirty': submitted && !selectedPlatform}" optionLabel="descplatform"
+                  ></p-dropdown>
+                  <small class="p-error" *ngIf="submitted && !selectedPlatform">Champ obligatoire*</small>
+          
+          
+              </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <div class="p-grid p-nogutter p-justify-end">
+                <p-button label="Suivant" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

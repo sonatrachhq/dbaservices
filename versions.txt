@@ -1,0 +1,10 @@
+1.0
+---
+--------------------------------------------------------------------------
+-set up project architecture (3 modules dbservices, app services, other services) with lazy loading
+-header component / footer component
+-Theming
+-Implementation of compil page
+-Implementation of getAppObjectsByRole() in frontend & backend
+-Managing exchange of data between IDMS & DBA-SERVICES using cookies
+------------------------------------------------------------------------------

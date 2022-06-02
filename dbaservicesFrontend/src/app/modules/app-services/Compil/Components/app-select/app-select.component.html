@@ -1,0 +1,39 @@
+<div class="demo-container p-p-4">
+    <p-card styleClass="p-fluid">
+        <ng-template pTemplate="title">
+            Application
+        </ng-template>
+        <ng-template pTemplate="subtitle">
+            Veuillez choisir l'application que vous voulez compiler
+        </ng-template>
+        <ng-template pTemplate="content">
+         
+
+            <div class="p-field">
+                <label for="firstname">Description Application </label>
+                <p-dropdown [options]='options'  required="true"
+                  [(ngModel)]="selectedApplication" placeholder="Selectionner une application" [showClear]="true" 
+                  [ngClass]="{'ng-dirty': submitted && !selectedApplication}"  optionLabel="descapplication"></p-dropdown>
+                  <small class="p-error" *ngIf="submitted && !selectedApplication">Champ obligatoire*</small>
+          
+          
+              </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          
+            <div class="p-d-flex p-jc-between">
+              <div>
+                <button pButton pRipple label="Retour" icon="pi pi-angle-left" class=" p-button-secondary"
+                  (click)="prevPage()">
+                </button>
+              </div>
+              <div>
+                <button pButton pRipple label="Suivant" icon="pi pi-angle-right" iconPos="right" (click)="nextPage()">
+                </button>
+              </div>
+              <!-- <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left" ></p-button>
+                <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button> -->
+            </div>
+        </ng-template>
+    </p-card>
+</div>

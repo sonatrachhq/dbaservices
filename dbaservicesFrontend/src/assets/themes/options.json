@@ -1,0 +1,21 @@
+[
+
+    {
+      "id":1,
+      "backgroundColor": "#191919",
+      "buttonColor": "#FF9200",
+      "headingColor": "#252525",
+      "label": "Dark Theme",
+      "value": "dark-theme"
+    },
+
+    {
+      "id":2,
+      "backgroundColor": "#ffffff",
+      "buttonColor": "#FF9200",
+      "headingColor": "#f8f9fa",
+      "label": "Light Theme",
+      "value": "light-theme"
+    }
+
+  ]

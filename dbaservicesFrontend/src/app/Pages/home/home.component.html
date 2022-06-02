@@ -1,0 +1,18 @@
+<div class="demo-container p-p-4">
+<p-card >
+<p-organizationChart [value]="data1" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"
+    styleClass="company">
+    <ng-template let-node pTemplate="person">
+        <div class="node-header p-corner-top">{{node.label}}</div>
+        <div class="node-content">
+            <img src="assets/images/logoSh.png" width="32">
+            <div>{{node.data[name]}}</div>
+        </div>
+    </ng-template>
+    <ng-template let-node pTemplate="department">
+       {{node.label}}
+    </ng-template>
+</p-organizationChart>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+</p-card>
+</div>

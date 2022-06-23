@@ -11,7 +11,7 @@
 
             <div class="p-field">
                 <label for="firstname">Description Plateforme </label>
-                <p-dropdown [options]='options'  required="true"
+                <p-dropdown [options]=' platforms$|async'  required="true"
                   [(ngModel)]="selectedPlatform" placeholder="Selectionner une plateforme" [showClear]="true"  
                   [ngClass]="{'ng-dirty': submitted && !selectedPlatform}" optionLabel="descplatform"
                   ></p-dropdown>

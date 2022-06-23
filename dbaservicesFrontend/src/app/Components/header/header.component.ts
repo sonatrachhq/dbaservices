@@ -32,7 +32,8 @@ export class HeaderComponent implements OnInit {
           {
           label: 'Compilation',
           icon: 'pi pi-fw pi-align-center',
-          routerLink: 'compil/platform'
+          routerLink: 'compil/platform',
+          skipLocationChange:true
         },
         { label: 'Vider L\'éspace Disk',
           icon: 'pi pi-fw pi-trash', 

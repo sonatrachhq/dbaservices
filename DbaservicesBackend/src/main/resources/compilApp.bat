@@ -1,0 +1,1 @@
+/srv/scripts/dbaservices/compile.sh "$1" "$2"

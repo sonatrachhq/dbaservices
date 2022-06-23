@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { RoleIDMS } from '../Models/RoleIDMS';
 import { MessageService } from 'primeng/api';
+import { Image } from '../Models/Image';
 const TOKEN_HEADER_KEY = 'Authorization';
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class GlobalAppService {
     "username": ""
   };
   idmsHost: string;
+  dbaServHost:string;
   httpOptions = {};
 
   constructor(private cookieService: CookieService,
@@ -34,6 +36,7 @@ export class GlobalAppService {
   getUsersRoles() {
     this.currentUser.sonuser = this.cookieService.get('sonUser')
     this.idmsHost = this.sessionStorage.getIdmsHost()
+   
     this.httpOptions = {
       headers: new HttpHeaders({ skip: "true" })
         .set(TOKEN_HEADER_KEY, 'Bearer ' + this.cookieService.get('token'))
@@ -60,6 +63,7 @@ export class GlobalAppService {
 
   getAppObjectsByRole() {
     this.idmsHost = this.sessionStorage.getIdmsHost();
+    this.dbaServHost=this.sessionStorage.getHost()
     this.httpOptions = {
       headers: new HttpHeaders({ skip: "true" })
         .set(TOKEN_HEADER_KEY, 'Bearer ' + this.cookieService.get('token'))
@@ -75,7 +79,8 @@ export class GlobalAppService {
       "userstatus": 0,
       "username": ""
     };
-    this.http.post<Array<UsersObject>>(this.idmsHost + "getAppObjectsByRole", currentUser, this.httpOptions).toPromise().then(
+    this.simulateAuth();
+    this.http.post<Array<UsersObject>>(this.idmsHost + "getAppObjectsByRole", currentUser, this.httpOptions).subscribe(
       (data) => {
         console.log(data)
         this.sessionStorage.saveObjects(data);
@@ -97,4 +102,30 @@ export class GlobalAppService {
     )
   }
 
+  simulateAuth(){
+    this.dbaServHost=this.sessionStorage.getHost()
+    let user={
+      "user":"fifi",
+      "password":"pwd",
+      "token":""
+  }
+  this.httpOptions = {
+    headers: new HttpHeaders({ skip: "true" })
+  }
+ 
+  this.http.post(this.dbaServHost+"user/simulateAuth",user,this.httpOptions).toPromise().then(
+   ( data:any)=>{
+     
+      this.sessionStorage.saveToken(data.token);
+    },
+    error=>console.log(error)
+  )
+  }
+
+  getImages() {
+    return this.http.get<any>('assets/carousel-images/photos.json')
+      .toPromise()
+      .then(res => <Image[]>res.data)
+      .then(data => { return data; });
+    }
 }

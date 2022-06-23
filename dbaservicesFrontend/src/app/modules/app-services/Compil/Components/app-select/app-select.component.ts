@@ -1,8 +1,17 @@
+import { CompilPrivs } from './../../Models/CompilPrivs';
+
+
+
+import { Observable, Subscription } from 'rxjs';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-export interface Application{
-  "idapplication":number,
-  "descapplication":string
+import { GlobalCompilService } from '../../Services/global-compil.service';
+import { filter } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
+import { DialogModel } from 'src/app/helpers/dialog-model';
+export interface Application {
+  "idapplication": number,
+  "descapplication": string
 }
 @Component({
   selector: 'app-app-select',
@@ -10,55 +19,95 @@ export interface Application{
   styleUrls: ['./app-select.component.css']
 })
 export class AppSelectComponent implements OnInit {
-  options:Application[]=[
-    {  "idapplication":2,"descapplication":"Payroll"},
-    { "idapplication":1,"descapplication":"IDMS"},
-    { "idapplication":0,"descapplication":"PAIE"}]
-    selectedApplication: Application;
-    selectedPlatform:number
+  compilPrivs$: Observable<any>;
+  applications: Application[]
+  subscriptionCompilPrivs: Subscription;
 
+  selectedApplication: Application;
+  selectedPlatformId: number
+  selectedPlatform: string;
   submitted: boolean = false;
 
-  constructor( private router: Router,private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute, 
+    private globalCompilService: GlobalCompilService, 
+    private cookieService: CookieService,
+    private dialogModel:DialogModel) { }
 
-  ngOnInit() { 
-      this.activatedRoute.queryParams.subscribe(
-        params=>{
-          //console.log(params)
-          this.selectedPlatform=params.idplatform
-          this.selectedApplication=this.options.filter(value=>value.idapplication==params.idapplication)[0]
-        }
-      )
+  ngOnInit() {
+
+    this.globalCompilService.getCompilPrivs(Number(this.cookieService.get("userId")));
+    this.compilPrivs$ = this.globalCompilService.compilPrivs$;
+    this.subscriptionCompilPrivs = this.compilPrivs$.subscribe(
+      data => {
+        this.activatedRoute.queryParams.subscribe(
+          params => {
+            ////console.log(params)
+            this.selectedPlatformId = Number(params.idplatform)
+            this.selectedPlatform = params.selectedPlatform;
+            //console.log(this.selectedPlatformId)
+            if (data != null) {
+              //console.log(data)
+              this.applications = data.map(val => val.application).filter(value => value.applicationmode == this.selectedPlatformId)
+
+
+
+              //val.applicationmode==this.selectedPlatform
+
+
+              //console.log(this.applications)
+              this.selectedApplication = this.applications.filter(value => value.idapplication == Number(params.idapplication))[0]
+            }
+
+
+
+          }
+        )
+
+      },
+      error=>{
+          this.dialogModel.showErrorDialog("Une erreur d'\est produite! veuillez réessayer plus tard")
+      }
+    )
+
+
+
+
+
+
+
   }
 
   nextPage() {
-      if (this.selectedApplication) {
-        let navigationExtras: NavigationExtras = {
-          queryParams: {
-              "idplatform":this.selectedPlatform,
-            "idapplication":this.selectedApplication.idapplication
+    if (this.selectedApplication) {
+      //console.log(JSON.stringify(this.selectedApplication))
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          "idplatform": this.selectedPlatformId,
+          "idapplication": this.selectedApplication.idapplication,
+          "selectedApp": JSON.stringify(this.selectedApplication),
+          "selectedPlatform": this.selectedPlatform
 
-            
-          }
+        }, skipLocationChange: true
       };
-          this.router.navigate(['compil/confirmCompil'],navigationExtras);
+      this.router.navigate(['compil/confirmCompil'], navigationExtras);
 
-          return;
-      }
+      return;
+    }
 
-      this.submitted = true;
+    this.submitted = true;
   }
-  
+
   prevPage() {
-    //console.log("this.selectedPlatform   "+  this.selectedPlatform)
+    //console.log("this.selectedPlatform   " + this.selectedPlatformId)
     let navigationExtras: NavigationExtras = {
       queryParams: {
-          "idplatform":this.selectedPlatform,
-        
+        "idplatform": this.selectedPlatformId,
 
-        
-      }
-  };
-    this.router.navigate(['compil/platform'],navigationExtras);
-}
+
+
+      }, skipLocationChange: true
+    };
+    this.router.navigate(['compil/platform'], navigationExtras);
+  }
 }

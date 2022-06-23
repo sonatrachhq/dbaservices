@@ -10,11 +10,11 @@
          
 
             <p-fieldset legend="Platforme sélectionnée" [toggleable]="true"  [collapsed]="false">
-                <p >plateforme  {{selectedPlatform}}</p>
+                <p > {{selectedPlatform}}</p>
             </p-fieldset>
             <br>
             <p-fieldset legend="Application sélectionnée" [toggleable]="true"  [collapsed]="false">
-                <p >application  {{selectedApplication}}</p>
+                <p >  {{selectedApp.applicationtitle}}</p>
             </p-fieldset>
         </ng-template>
         <ng-template pTemplate="footer">
@@ -34,4 +34,5 @@
             </div>
         </ng-template>
     </p-card>
+
 </div>

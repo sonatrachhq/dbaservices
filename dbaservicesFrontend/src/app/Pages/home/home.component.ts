@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, TreeNode } from 'primeng/api';
+import { GlobalAppService } from 'src/app/Services/global-app.service';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +12,22 @@ export class HomeComponent implements OnInit {
   data1: TreeNode[];
 
   selectedNode: TreeNode;
-
-  constructor(private messageService: MessageService) {}
+  images: any[];
+  responsiveOptions:any[] = [
+    {
+        breakpoint: '1024px',
+        numVisible: 5
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 3
+    },
+    {
+        breakpoint: '560px',
+        numVisible: 1
+    }
+];
+  constructor(private messageService: MessageService,private globalService:GlobalAppService) {}
 
   ngOnInit() {
       this.data1 = [{
@@ -83,7 +98,7 @@ export class HomeComponent implements OnInit {
           ]
       }];
 
-      
+      this.globalService.getImages().then(images => this.images = images);
   }
 
   onNodeSelect(event) {

@@ -11,9 +11,9 @@
 
             <div class="p-field">
                 <label for="firstname">Description Application </label>
-                <p-dropdown [options]='options'  required="true"
+                <p-dropdown [options]='applications'  required="true"
                   [(ngModel)]="selectedApplication" placeholder="Selectionner une application" [showClear]="true" 
-                  [ngClass]="{'ng-dirty': submitted && !selectedApplication}"  optionLabel="descapplication"></p-dropdown>
+                  [ngClass]="{'ng-dirty': submitted && !selectedApplication}"  optionLabel="applicationtitle"></p-dropdown>
                   <small class="p-error" *ngIf="submitted && !selectedApplication">Champ obligatoire*</small>
           
           

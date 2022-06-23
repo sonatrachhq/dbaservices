@@ -1,0 +1,23 @@
+<div class="demo-container p-p-4">
+<p-panel header="Résultat de la compilation">
+ 
+        <p-tree [value]="files" (onNodeSelect)="nodeSelect($event)" selectionMode="single" [(selection)]="selectedFile"></p-tree>
+      
+</p-panel>
+</div>
+<p-messages></p-messages>
+<!--dialog to update new item-->
+<p-dialog [(visible)]="fileContentDialog" [style]="{width: '800px'}" header="Contenu du fichier" [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <p *ngFor="let con of content">{{con}}</p>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Fermer" icon="pi pi-times" class="p-button-text" (click)="hideFileContentDialog()"></button>
+   
+
+  </ng-template>
+  
+</p-dialog>

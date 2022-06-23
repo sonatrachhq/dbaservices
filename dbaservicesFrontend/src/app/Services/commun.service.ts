@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 
 interface Config {
 
-  url: string;
+  dbaServHost: string;
   idmsHost:string;
 
 }
@@ -35,7 +35,7 @@ public load(): Promise<void> {
       .toPromise()
       .then(config => {
 
-        this.host = config.url;
+        this.host = config.dbaServHost;
         this.idmsHost=config.idmsHost;
         this.sessionStorage.saveHost(this.host);
         this.sessionStorage.saveIdmsHost(this.idmsHost);

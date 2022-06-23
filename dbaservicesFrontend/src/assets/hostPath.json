@@ -1,6 +1,6 @@
 {
    
-    "url":"http://algsapgp:8015/api/",
+    "dbaServHost":"http://localhost:9090/",
     "idmsHost":"http://localhost:8080/"
    
   

@@ -1,3 +1,4 @@
+import { CompilResultComponent } from './Compil/Components/compil-result/compil-result.component';
 
 import { CompilConfirmComponent } from './Compil/Components/compil-confirm/compil-confirm.component';
 import { AppSelectComponent } from './Compil/Components/app-select/app-select.component';
@@ -11,7 +12,8 @@ const routes: Routes = [
   children:[
     {path:'platform', component:PlatformSelectComponent},
     {path:'application', component:AppSelectComponent},
-    {path:'confirmCompil', component:CompilConfirmComponent}
+    {path:'confirmCompil', component:CompilConfirmComponent},
+    {path:'resultCompil', component:CompilResultComponent}
   ]
   },
  

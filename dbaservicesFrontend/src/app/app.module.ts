@@ -1,3 +1,4 @@
+import { AuthInterceptor } from './AuthModule/auth.interceptor';
 import { MessageService } from 'primeng/api';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
@@ -12,7 +13,7 @@ import { DbServicesModule } from './modules/db-services/db-services.module';
 import { OtherServicesModule } from './modules/other-services/other-services.module';
 import { ThemeMenuComponent } from './Theme/Component/theme-menu/theme-menu.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GlobalAppService } from './Services/global-app.service';
@@ -34,7 +35,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
+import {GalleriaModule} from 'primeng/galleria';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CardModule
+    CardModule,
+    GalleriaModule
  
   ],
   providers: [MessageService,
@@ -76,11 +78,12 @@ import { MatSelectModule } from '@angular/material/select';
       useFactory: (communService: CommunService,globalAppService:GlobalAppService) => {
         return () => {
           return communService.load().then(()=>{
-              return globalAppService.getAppObjectsByRole()
+              return globalAppService.getUsersRoles()
           })
         }
       }
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

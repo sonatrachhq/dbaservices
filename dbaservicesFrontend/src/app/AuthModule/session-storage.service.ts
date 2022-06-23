@@ -7,6 +7,7 @@ const HOST_KEY = 'HostKey';
 const IDMS_HOST_KEY = 'IdmsHostKey';
 const ROLES_KEY = 'Roles';
 const USERSOBJECTS_KEY='UsersObjects';
+const TOKEN_KEY="AuthToken"
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,15 @@ export class SessionStorageService {
   signOut() {
     window.sessionStorage.clear();
   }
+  public saveToken(token: string) {
+    window.sessionStorage.removeItem(TOKEN_KEY);
+    window.sessionStorage.setItem(TOKEN_KEY, token);
+  }
 
+  public getToken(): string {
+    let token=sessionStorage.getItem(TOKEN_KEY);
+    return token !==null? token :"";
+  }
   public saveHost(host: string) {
     window.sessionStorage.removeItem(HOST_KEY);
     window.sessionStorage.setItem(HOST_KEY, host);
